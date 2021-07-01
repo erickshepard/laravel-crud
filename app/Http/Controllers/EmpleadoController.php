@@ -97,6 +97,8 @@ class EmpleadoController extends Controller
         if($request->hasFile('Foto')){
             $empleado=Empleado::findOrFail($id);
 
+           
+
             Storage::delete('public/'.$empleado->Foto);
 
             $datosEmpleado['Foto']= $request->file('Foto')->store('uploads','public');
@@ -116,9 +118,12 @@ class EmpleadoController extends Controller
     {
         //
         $empleado = Empleado::findOrFail($id);
+        //
+        if(Storage::delete('public/'.$empleado->Foto)){
+            Empleado::destroy($id);
+        }
 
-
-        Empleado::destroy($id);
+        
         //Regresar al index
         return redirect('empleado');
     }
