@@ -14,8 +14,9 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
-        return view('empleado.index');
+        //Consultar info de la BD
+        $datos['empleados']=Empleado::paginate(5);
+        return view('empleado.index', $datos);
     }
 
     /**
@@ -38,6 +39,19 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         //
+        //$datosEmpleado = request()->all();
+        //Traer datos
+        $datosEmpleado = request()->except('_token');
+        //validamos si trae foto
+        if($request->hasFile('Foto')){
+            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
+        }
+
+
+
+        //Insertar datos
+        Empleado::insert($datosEmpleado);
+        return response()->json($datosEmpleado);
     }
 
     /**
@@ -57,9 +71,14 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleado $empleado)
+    
+    public function edit($id)
     {
-        //
+        //traer datos dependiendo el id
+        $empleado = Empleado::findOrFail($id);
+        //mandar vista de editar
+        //con compact mandamos los datos 
+        return view('empleado.edit', compact('empleado'));
     }
 
     /**
@@ -80,8 +99,11 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
         //
+        Empleado::destroy($id);
+        //Regresar al index
+        return redirect('empleado');
     }
 }
