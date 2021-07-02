@@ -1,25 +1,37 @@
 
 <h1>{{$modo}} Empleado</h1>
 
+@if(count($errors)>0)
+<div class="alert alert-danger" role="alert">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    
+</div>
+   
+@endif
+
 <div class="form-group">
     <label for="Nombre">Nombre:</label>
-    <input type="text" class="form-control" name="Nombre" value="{{ isset($empleado->Nombre)?$empleado->Nombre:''}}" id="Nombre">
+    <input type="text" class="form-control" name="Nombre" value="{{ isset($empleado->Nombre)?$empleado->Nombre:old('Nombre') }}" id="Nombre">
     
 </div>
 <div class="form-group">
     <label for="ApellidoPaterno"> Apellido Paterno:</label>
-    <input type="text" class="form-control" name="ApellidoPaterno" value="{{ isset($empleado->ApellidoPaterno)?$empleado->ApellidoPaterno:''}}" id="ApellidoPaterno">
+    <input type="text" class="form-control" name="ApellidoPaterno" value="{{ isset($empleado->ApellidoPaterno)?$empleado->ApellidoPaterno:old('ApellidoPaterno')}}" id="ApellidoPaterno">
     
 </div>
 
 <div class="form-group">
     <label for="ApellidoMaterno"> Apellido Materno:</label>
-    <input class="form-control" type="text" name="ApellidoMaterno" id="ApellidoMaterno" value="{{ isset($empleado->ApellidoMaterno)?$empleado->ApellidoMaterno:''}}">
+    <input class="form-control" type="text" name="ApellidoMaterno" id="ApellidoMaterno" value="{{ isset($empleado->ApellidoMaterno)?$empleado->ApellidoMaterno:old('ApellidoMaterno')}}">
     
 </div>
 <div class="form-group">
     <label for="Correo">Correo</label>
-    <input  class="form-control" type="email" name="Correo" id="Correo" value="{{ isset($empleado->Correo)?$empleado->Correo:''}}">
+    <input  class="form-control" type="email" name="Correo" id="Correo" value="{{ isset($empleado->Correo)?$empleado->Correo:old('Correo')}}">
     
 </div>
 <div class="form-group">
