@@ -1,10 +1,15 @@
-Mostrar la lista de empleados :)
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
 
 @if(Session::has('mensaje'))
     {{ Session::get('mensaje')}}
 @endif
 
-<a href="{{ url('empleado/create')}}"> Registrar nuevo empleado</a>
+<a href="{{ url('empleado/create')}}" class="btn btn-success"> Registrar nuevo empleado</a>
+<br>
+<br>
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
@@ -22,7 +27,7 @@ Mostrar la lista de empleados :)
         <tr>
             <td>{{ $empleado->id}}</td>
             <td>
-                <img src="{{ asset('storage').'/'.$empleado->Foto}}" width="50px" height="50px" alt="">
+                <img src="{{ asset('storage').'/'.$empleado->Foto}}" width="50px" height="50px" alt="" class="img-thumbnail img-fluid">
                 </td>
 
             <td>{{ $empleado->Nombre}}</td>
@@ -30,17 +35,19 @@ Mostrar la lista de empleados :)
             <td>{{ $empleado->ApellidoMaterno}}</td>
             <td>{{ $empleado->Correo}}</td>
             <td> 
-                <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}">
+                <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}" class="btn btn-warning">
                     Editar 
                 </a>
                 |
-                <form action="{{ url('/empleado/'. $empleado->id) }}" method="post">
+                <form action="{{ url('/empleado/'. $empleado->id) }}" method="post" class="d-inline">
                     @csrf
                     {{ method_field('DELETE')}}
-                    <input type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar">
+                    <input type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar" class="btn btn-danger">
                 </form>
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+</div>
+@endsection
