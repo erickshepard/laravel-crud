@@ -27,4 +27,15 @@ Route::get('/empleado/create', [EmpleadoController::class, 'create']);
 
 
 //Para traer todas las clases
+
+Route::get('/', function () {
+    return view('auth.login');
+});
 Route::resource('/empleado', EmpleadoController::class);
+Auth::routes();
+
+Route::get('/home', [EmpleadoController::class, 'index'])->name('home');
+//rutas de autenticacion
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/', [EmpleadoController::class, 'index'])->name('home');
+});
