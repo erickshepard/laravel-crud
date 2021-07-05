@@ -33,10 +33,12 @@ Route::get('/', function () {
 });
 Route::resource('/empleado', EmpleadoController::class)->middleware('auth');
 //rutas que queremos desaparecer
-Auth::routes(['register'=>false, 'reset'=>false]);
+Auth::routes(['reset'=>false]);
 
 Route::get('/home', [EmpleadoController::class, 'index'])->name('home');
 //rutas de autenticacion
+
+
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [EmpleadoController::class, 'index'])->name('home');
 });
